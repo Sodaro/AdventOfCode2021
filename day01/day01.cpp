@@ -7,7 +7,7 @@
 #include <vector>
 
 
-int GetSumOfRange(std::vector<int> values, int startIndex, int endIndex)
+int GetSumOfRange(std::vector<int> &values, int startIndex, int endIndex)
 {
     int sum = 0;
     for (int i = startIndex; i <= endIndex; i++)

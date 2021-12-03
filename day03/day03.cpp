@@ -4,6 +4,7 @@
 #include <vector>
 
 const int NR_OF_BITS = 12;
+
 void writeValueToFile(std::string path, int value)
 {
     std::ofstream output;
@@ -11,18 +12,21 @@ void writeValueToFile(std::string path, int value)
     output << std::to_string(value) << std::endl;
     output.close();
 }
-void countBitsInPosition(int (&onesArr)[NR_OF_BITS], int (&zeroesArr)[NR_OF_BITS], std::vector<std::bitset<NR_OF_BITS>>& inputnumbers)
+
+void countBitsInPosition(int (&onesArr)[NR_OF_BITS], int (&zeroesArr)[NR_OF_BITS], std::vector<std::bitset<NR_OF_BITS>>& bitsets)
 {
-    for (auto line : inputnumbers)
+    for (auto bitset : bitsets)
     {
-        for (int i = 0; i < line.size(); i++)
+        for (int i = 0; i < bitset.size(); i++)
         {
-            line[i] == 0 ? zeroesArr[i]++ : onesArr[i]++;
+            bitset[i] == 0 ? zeroesArr[i]++ : onesArr[i]++;
         }
     }
 }
-std::bitset<NR_OF_BITS> getMostCommonValue(std::vector<std::bitset<NR_OF_BITS>>& inputnumbers)
+
+std::bitset<NR_OF_BITS> getMostCommonBits(std::vector<std::bitset<NR_OF_BITS>>& inputnumbers)
 {
+    //count the bits and return a bitset with the most common bits
     std::bitset<NR_OF_BITS> retVal;
     int onesArr[NR_OF_BITS] = {0}; int zeroesArr[NR_OF_BITS] = {0};
     countBitsInPosition(onesArr, zeroesArr, inputnumbers);
@@ -33,8 +37,9 @@ std::bitset<NR_OF_BITS> getMostCommonValue(std::vector<std::bitset<NR_OF_BITS>>&
     return retVal;
 }
 
-std::bitset<NR_OF_BITS> getLeastCommonValue(std::vector<std::bitset<NR_OF_BITS>>& inputnumbers)
+std::bitset<NR_OF_BITS> getLeastCommonBits(std::vector<std::bitset<NR_OF_BITS>>& inputnumbers)
 {
+    //count the bits and return a bitset with the least common bits
     std::bitset<NR_OF_BITS> retVal;
     int onesArr[NR_OF_BITS] = { 0 }; int zeroesArr[NR_OF_BITS] = { 0 };
     countBitsInPosition(onesArr, zeroesArr, inputnumbers);
@@ -47,8 +52,8 @@ std::bitset<NR_OF_BITS> getLeastCommonValue(std::vector<std::bitset<NR_OF_BITS>>
 
 void solvePart1(std::vector<std::bitset<NR_OF_BITS>>& inputnumbers, std::string outputPath)
 {
-    std::bitset<NR_OF_BITS> gamma = getMostCommonValue(inputnumbers);
-    std::bitset<NR_OF_BITS> epsilon = getLeastCommonValue(inputnumbers);
+    std::bitset<NR_OF_BITS> gamma = getMostCommonBits(inputnumbers);
+    std::bitset<NR_OF_BITS> epsilon = getLeastCommonBits(inputnumbers);
     int powerConsumption = (int)(gamma.to_ulong() * epsilon.to_ulong());
     writeValueToFile(outputPath, powerConsumption);
 }
@@ -63,7 +68,7 @@ void solvePart2(std::vector<std::bitset<NR_OF_BITS>> &bitsets, std::string outpu
 
     for (int i = NR_OF_BITS - 1; i >= 0; i--)
     {
-        std::bitset<NR_OF_BITS> O2Criteria = getMostCommonValue(bitsetsCopy);
+        std::bitset<NR_OF_BITS> O2Criteria = getMostCommonBits(bitsetsCopy);
         bool bitCriteria = O2Criteria[i];
         for (int j = bitsetsCopy.size() - 1; j >= 0; j--)
         {
@@ -78,7 +83,7 @@ void solvePart2(std::vector<std::bitset<NR_OF_BITS>> &bitsets, std::string outpu
 
     for (int i = NR_OF_BITS - 1; i >= 0; i--)
     {
-        std::bitset<NR_OF_BITS> CO2Criteria = getLeastCommonValue(bitsets);
+        std::bitset<NR_OF_BITS> CO2Criteria = getLeastCommonBits(bitsets);
         bool bitCriteria = CO2Criteria[i];
         for (int j = bitsets.size() - 1; j >= 0; j--)
         {

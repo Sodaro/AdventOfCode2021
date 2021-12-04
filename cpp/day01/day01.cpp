@@ -1,13 +1,9 @@
-// day01.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 
-
-int GetSumOfRange(std::vector<int> &values, int startIndex, int endIndex)
+int getSumOfRange(std::vector<int> &values, int startIndex, int endIndex)
 {
     int sum = 0;
     for (int i = startIndex; i <= endIndex; i++)
@@ -15,7 +11,7 @@ int GetSumOfRange(std::vector<int> &values, int startIndex, int endIndex)
 
     return sum;
 }
-void SolvePart1(std::string input, std::string output)
+void solvePart1(std::string input, std::string output)
 {
     std::string line;
     std::ifstream inputFile;
@@ -39,7 +35,7 @@ void SolvePart1(std::string input, std::string output)
     outputFile << std::to_string(increasedDepthCount) << std::endl;
 }
 
-void SolvePart2(std::string input, std::string output)
+void solvePart2(std::string input, std::string output)
 {
     std::string line;
     std::ifstream inputFile;
@@ -57,8 +53,8 @@ void SolvePart2(std::string input, std::string output)
         if (depthValues.size() == 4)
         {
             //every 4 numbers compare the first 3 numbers with the second 3 numbers, and then remove the first number
-            int a = GetSumOfRange(depthValues, 0, 2);
-            int b = GetSumOfRange(depthValues, 1, 3);
+            int a = getSumOfRange(depthValues, 0, 2);
+            int b = getSumOfRange(depthValues, 1, 3);
             if (b > a)
                 increasedDepthCount++;
 
@@ -72,7 +68,7 @@ void SolvePart2(std::string input, std::string output)
 
 int main()
 {
-    SolvePart1("input.txt", "output1.txt");
-    SolvePart2("input.txt", "output2.txt");
+    solvePart1("input.txt", "output1.txt");
+    solvePart2("input.txt", "output2.txt");
 }
 

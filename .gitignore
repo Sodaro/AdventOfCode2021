@@ -35,7 +35,9 @@ Latest commit 1503b47 on Jun 12
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 *.sln
-*.vscxproj
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
 
 # User-specific files
 *.rsuser

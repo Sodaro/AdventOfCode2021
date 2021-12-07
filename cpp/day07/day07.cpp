@@ -12,12 +12,17 @@ void writeValueToFile(std::string path, uint64_t value)
     output.close();
 }
 
-int sumSteps(int n)
+int recursiveSumSteps(int n)
 {
     if (n == 1)
         return 1;
     
-    return n+sumSteps(n - 1);
+    return n + recursiveSumSteps(n - 1);
+}
+
+int nthTriangleNumber(int n)
+{
+    return n * (n + 1)/2;
 }
 
 int solvePart1(std::vector<int>& numbers)
@@ -52,7 +57,7 @@ int solvePart2(std::vector<int>& numbers)
             int distance = abs(numbers[j] - i);
             if (distance == 0)
                 continue;
-            fuelCost += sumSteps(distance);
+            fuelCost += nthTriangleNumber(distance);
         }
         fuelCosts.push_back(fuelCost);
         fuelCost = 0;

@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -100,8 +99,7 @@ void solvePart2(std::vector<MapPoint*> &data, int rowCount, int lineLength)
     std::sort(basinSizes.begin(), basinSizes.end(), std::greater<>());
 
     int multipliedSizes = basinSizes[0] * basinSizes[1] * basinSizes[2];
-    std::cout << multipliedSizes << std::endl;
-
+    writeValueToFile("output2.txt", multipliedSizes);
 }
 
 int main()
@@ -148,11 +146,7 @@ int main()
             }
         }
     }
-    //solvePart1(points);
 
+    solvePart1(points);
     solvePart2(points, rowCount, lineLength);
-    std::cout << "beans" << std::endl;
-
-        //for (int j = 0; j < data[i].size(); j++)
-        //{
 }

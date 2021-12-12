@@ -1,10 +1,18 @@
-#include <iostream>
 #include <fstream>
 #include <string>
-#include <Windows.h>
 
 const int LENGTH = 10;
 const int MAX_STEPS = 10000;
+
+void writeValueToFile(std::string path, int value)
+{
+    std::ofstream output;
+    output.open(path);
+    output << std::to_string(value) << std::endl;
+    output.close();
+}
+
+
 void setup(int(&octopuses)[LENGTH][LENGTH])
 {
     int i = 0;
@@ -24,8 +32,6 @@ void setup(int(&octopuses)[LENGTH][LENGTH])
 
 void flash(int row, int col, int (&octopuses)[LENGTH][LENGTH], int &nrOfFlashes)
 {
-     // mark the point so that I know if I passed through it.
-
     if (octopuses[row][col] == -1)
         return;
 
@@ -97,7 +103,6 @@ int main()
     int firstSynchronizedStep = 0;
     for (int h = 0; h < MAX_STEPS; h++)
     {
-        std::string output = "";
         for (int i = 0; i < LENGTH; i++)
         {
             for (int j = 0; j < LENGTH; j++)
@@ -129,25 +134,8 @@ int main()
                     octopuses[i][j] = 0;
                 else
                     isSynchronized = false;
-
-                output += std::to_string(octopuses[i][j]);
             }
-            output += "\n";
-        }
-
-        std::cout << output << std::endl;
-        //if (h < 10)
-        //{
-        //    Sleep(500);
-        //    system("cls");
-        //}
-        //else if (h >= 224)
-        //{
-        //    Sleep(500);
-        //    system("cls");
-        //}
-        
-        
+        }   
 
         if (isSynchronized)
         {
@@ -155,6 +143,6 @@ int main()
             break;
         }
     }
-
-    std::cout << "First step when all flash: " << firstSynchronizedStep+1 << std::endl;
+    writeValueToFile("output1.txt", nrOfFlashesAtStep100);
+    writeValueToFile("output2.txt", firstSynchronizedStep + 1);
 }

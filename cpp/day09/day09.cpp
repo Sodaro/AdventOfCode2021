@@ -19,26 +19,26 @@ void writeValueToFile(std::string path, int value)
     output.close();
 }
 
-class MapPoint
+class Point
 {
 public:
-    MapPoint(int p_height)
+    Point(int p_height)
     {
         height = p_height;
     }
-    MapPoint* getNeighbor(Direction dir)
+    Point* getNeighbor(Direction dir)
     {
         return neighbors[static_cast<int>(dir)];
     }
-    void AddNeighbor(MapPoint* point, Direction dir)
+    void AddNeighbor(Point* point, Direction dir)
     {
         neighbors[static_cast<int>(dir)] = point;
     }
     int height = 0;
-    MapPoint* neighbors[4] = { nullptr };
+    Point* neighbors[4] = { nullptr };
 };
 
-void solvePart1(std::vector<MapPoint*> &data)
+void solvePart1(std::vector<Point*> &data)
 {
     std::vector<int> lowestPoints;
     for (int i = 0; i < data.size(); i++)
@@ -70,7 +70,7 @@ void solvePart1(std::vector<MapPoint*> &data)
     writeValueToFile("output1.txt", sum);
 }
 
-void flood_fill(MapPoint* point, int &size)
+void flood_fill(Point* point, int &size)
 {
     if (point == nullptr || point->height == 9 || point->height == -1)
         return;                                             
@@ -83,7 +83,7 @@ void flood_fill(MapPoint* point, int &size)
     flood_fill(point->getNeighbor(Direction::East), size);
 }
 
-void solvePart2(std::vector<MapPoint*> &data, int rowCount, int lineLength)
+void solvePart2(std::vector<Point*> &data, int rowCount, int lineLength)
 {
     //map out the 9's, get the length between them
     std::vector<int> basinSizes;
@@ -106,7 +106,7 @@ int main()
 {
     std::ifstream input("input.txt");
     std::string line;
-    std::vector<MapPoint*> points;
+    std::vector<Point*> points;
     int rowCount = 0, lineLength = 0;
     while (std::getline(input, line))
     {
@@ -114,7 +114,7 @@ int main()
         for (int i = 0; i < lineLength; i++)
         {
             int height = line[i] - '0';
-            points.push_back(new MapPoint(height));
+            points.push_back(new Point(height));
         }
         rowCount++;
     }
@@ -123,7 +123,7 @@ int main()
     {
         for (int j = 0; j < lineLength; j++)
         {
-            MapPoint* point = points[i * lineLength + j];
+            Point* point = points[i * lineLength + j];
             if (i != 0)
             {
                 //top row has no above neighbor
